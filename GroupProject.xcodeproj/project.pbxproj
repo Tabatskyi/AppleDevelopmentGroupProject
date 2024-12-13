@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +30,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		CE35CC8F2D0C482400EA5530 /* Exceptions for "GroupProject" folder in "GroupProject" target */ = {
+		CE35CC8F2D0C482400EA5530 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -40,24 +40,9 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		CE35CC692D0C481E00EA5530 /* GroupProject */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				CE35CC8F2D0C482400EA5530 /* Exceptions for "GroupProject" folder in "GroupProject" target */,
-			);
-			path = GroupProject;
-			sourceTree = "<group>";
-		};
-		CE35CC802D0C482300EA5530 /* GroupProjectTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = GroupProjectTests;
-			sourceTree = "<group>";
-		};
-		CE35CC8A2D0C482400EA5530 /* GroupProjectUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = GroupProjectUITests;
-			sourceTree = "<group>";
-		};
+		CE35CC692D0C481E00EA5530 /* GroupProject */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (CE35CC8F2D0C482400EA5530 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = GroupProject; sourceTree = "<group>"; };
+		CE35CC802D0C482300EA5530 /* GroupProjectTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GroupProjectTests; sourceTree = "<group>"; };
+		CE35CC8A2D0C482400EA5530 /* GroupProjectUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GroupProjectUITests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +185,7 @@
 				};
 			};
 			buildConfigurationList = CE35CC622D0C481E00EA5530 /* Build configuration list for PBXProject "GroupProject" */;
+			compatibilityVersion = "Xcode 15.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -208,7 +194,6 @@
 			);
 			mainGroup = CE35CC5E2D0C481E00EA5530;
 			minimizedProjectReferenceProxies = 1;
-			preferredProjectObjectVersion = 77;
 			productRefGroup = CE35CC682D0C481E00EA5530 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -289,11 +274,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73FA9GLJD5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GroupProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -316,11 +302,12 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 73FA9GLJD5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GroupProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
