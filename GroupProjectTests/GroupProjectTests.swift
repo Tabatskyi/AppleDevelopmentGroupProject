@@ -1,10 +1,3 @@
-//
-//  GroupProjectTests.swift
-//  GroupProjectTests
-//
-//  Created by kerbi on 13.12.2024.
-//
-
 import XCTest
 @testable import GroupProject
 

@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  GroupProject
-//
-//  Created by kerbi on 13.12.2024.
-//
-
 import UIKit
 
 @main

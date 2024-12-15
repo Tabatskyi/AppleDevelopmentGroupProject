@@ -1,10 +1,3 @@
-//
-//  GroupProjectUITestsLaunchTests.swift
-//  GroupProjectUITests
-//
-//  Created by kerbi on 13.12.2024.
-//
-
 import XCTest
 
 final class GroupProjectUITestsLaunchTests: XCTestCase {
@@ -17,7 +10,6 @@ final class GroupProjectUITestsLaunchTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    @MainActor
     func testLaunch() throws {
         let app = XCUIApplication()
         app.launch()
