@@ -7,70 +7,82 @@ class TextTimer {
     private var startTime: Date?
     private var elapsedTime: TimeInterval = 0
     private var pausedElapsedTime: TimeInterval = 0
-    
-    private(set) var timerRunning: Bool = false
-    
-    // callback with formatted time update
-    var onTick: ((String) -> Void)?
-    /// start either from pause or scratch
-    func start(withInterval interval: TimeInterval) {
-            if timerRunning { return }
 
-            timerRunning = true
-            
-            if startTime == nil { // fresh start
-                startTime = Date()
-            } else { // resume from pause
-                startTime = Date().addingTimeInterval(-pausedElapsedTime)
-            }
-        
-        // actual timer
-        timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
-            if let strongSelf = self, let start = strongSelf.startTime {
-                strongSelf.elapsedTime = Date().timeIntervalSince(start)
-                let formattedTime = strongSelf.formatElapsedTime(strongSelf.elapsedTime)
-                strongSelf.onTick?(formattedTime)
+    private(set) var timerRunning: Bool = false
+
+    // Callback with formatted time update
+    var onTick: ((String) -> Void)?
+
+    /// Start either from pause or scratch
+    func start(withInterval interval: TimeInterval) {
+        if timerRunning { return }
+        timerRunning = true
+
+        if startTime == nil { // Fresh start
+            startTime = Date()
+        } else { // Resume
+            startTime = Date().addingTimeInterval(-pausedElapsedTime)
+        }
+
+        // Actual timer
+        timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [unowned self] _ in
+            if let start = self.startTime {
+                self.elapsedTime = Date().timeIntervalSince(start)
+                let formattedTime = self.formatElapsedTime(self.elapsedTime)
+                self.onTick?(formattedTime)
             }
         }
-        
+
         beginBackgroundTask()
     }
-    /// stop without reset
+
+    /// Pause without resetting the elapsed time
     func pause() {
         if !timerRunning { return }
-
         timerRunning = false
+
+        if let start = startTime {
+            pausedElapsedTime = Date().timeIntervalSince(start)  // Save elapsed time
+        }
+
         timer?.invalidate()
         timer = nil
         endBackgroundTask()
     }
-    /// stop and reset
+
+    /// Stop and reset
     func stop() {
         timerRunning = false
         timer?.invalidate()
         timer = nil
         startTime = nil
         pausedElapsedTime = 0
+        elapsedTime = 0
         onTick?("0:00")
         endBackgroundTask()
     }
-    
+
     private func formatElapsedTime(_ time: TimeInterval) -> String {
         let minutes = Int(time) / 60
         let seconds = Int(time) % 60
         return String(format: "%d:%02d", minutes, seconds)
     }
-    
+
     private func beginBackgroundTask() {
         backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "BackgroundTimer") {
             self.endBackgroundTask()
         }
     }
-    
+
     private func endBackgroundTask() {
         if backgroundTask != .invalid {
             UIApplication.shared.endBackgroundTask(backgroundTask)
             backgroundTask = .invalid
         }
+    }
+    
+    deinit {
+        timer?.invalidate()
+        endBackgroundTask()
     }
 }
