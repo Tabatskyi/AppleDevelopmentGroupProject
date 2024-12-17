@@ -15,6 +15,7 @@
 		CE1334B62D0E160F00B35AA8 /* GroupProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1334B52D0E160F00B35AA8 /* GroupProjectTests.swift */; };
 		CE1334C02D0E160F00B35AA8 /* GroupProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1334BF2D0E160F00B35AA8 /* GroupProjectUITests.swift */; };
 		CE1334C22D0E160F00B35AA8 /* GroupProjectUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1334C12D0E160F00B35AA8 /* GroupProjectUITestsLaunchTests.swift */; };
+		CE5530972D1185FA005EAA62 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5530962D1185FA005EAA62 /* Timer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		CE1334BB2D0E160F00B35AA8 /* GroupProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GroupProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE1334BF2D0E160F00B35AA8 /* GroupProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProjectUITests.swift; sourceTree = "<group>"; };
 		CE1334C12D0E160F00B35AA8 /* GroupProjectUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProjectUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CE5530962D1185FA005EAA62 /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				CE13349E2D0E160C00B35AA8 /* AppDelegate.swift */,
+				CE5530962D1185FA005EAA62 /* Timer.swift */,
 				CE1334A02D0E160C00B35AA8 /* SceneDelegate.swift */,
 				CE1334A22D0E160C00B35AA8 /* ViewController.swift */,
 				CE1334A72D0E160E00B35AA8 /* Assets.xcassets */,
@@ -257,6 +260,7 @@
 				CE1334A32D0E160C00B35AA8 /* ViewController.swift in Sources */,
 				CE13349F2D0E160C00B35AA8 /* AppDelegate.swift in Sources */,
 				CE1334A12D0E160C00B35AA8 /* SceneDelegate.swift in Sources */,
+				CE5530972D1185FA005EAA62 /* Timer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
