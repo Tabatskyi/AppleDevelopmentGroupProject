@@ -1,6 +1,9 @@
 import Foundation
 import UIKit
 
+// https://medium.com/codex/a-simple-swift-background-timer-bebd36589203
+// https://www.hackingwithswift.com/forums/swiftui/how-to-make-timer-continue-working-in-background/7479
+// https://www.hackingwithswift.com/books/ios-swiftui/counting-down-with-a-timer
 class TextTimer {
     private var timer: Timer?
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
