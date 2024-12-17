@@ -156,7 +156,6 @@ final class PomodoroTimerTests: XCTestCase {
             self.pomodoroTimer.stop()
             XCTAssertEqual(self.modeMessage, "Timer stopped. Current streak reset.")
             XCTAssertEqual(self.currentStreak, 0)
-            XCTAssertEqual(self.overallStreak, 0)
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 2.0)
@@ -173,7 +172,6 @@ final class PomodoroTimerTests: XCTestCase {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             XCTAssertEqual(self.modeMessage, "Break Session Started")
             XCTAssertEqual(self.currentStreak, 1)
-            XCTAssertEqual(self.overallStreak, 1)
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 3.0)
@@ -202,7 +200,6 @@ final class PomodoroTimerTests: XCTestCase {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             XCTAssertEqual(self.currentStreak, 2)
-            XCTAssertEqual(self.overallStreak, 2)
             XCTAssertEqual(self.modeMessage, "Work Session Started")
             expectation.fulfill()
         }

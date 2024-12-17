@@ -7,7 +7,14 @@ class PomodoroTimer {
     private var isWorkMode: Bool = true
     
     private(set) var currentStreak: Int = 0
-    private(set) var overallStreak: Int = 0
+    private(set) var overallStreak: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "overallStreak")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "overallStreak")
+        }
+    }
     
     var onTick: ((String) -> Void)?
     var onModeChange: ((String) -> Void)?
