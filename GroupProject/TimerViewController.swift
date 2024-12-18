@@ -15,6 +15,7 @@ class TimerViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         configureTimerCallbacks()
+        hideKeyboardWhenTappedAround()
     }
     
     private func setupUI() {

@@ -12,6 +12,7 @@ class TaskViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         configureTableView()
+        hideKeyboardWhenTappedAround()
     }
 
     private func setupUI() {

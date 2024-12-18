@@ -11,6 +11,7 @@
 		2D5B66042D132DAD0050DC99 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D5B66032D132DAB0050DC99 /* TaskTableViewCell.swift */; };
 		2D5B66072D132E100050DC99 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2D5B66062D132E100050DC99 /* SnapKit */; };
 		2DDA8DC72D1345D4003036C3 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDA8DC62D1345D1003036C3 /* TimerViewController.swift */; };
+		2DDA8DC92D134C88003036C3 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DDA8DC82D134C86003036C3 /* UIViewController.swift */; };
 		CE13349F2D0E160C00B35AA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE13349E2D0E160C00B35AA8 /* AppDelegate.swift */; };
 		CE1334A12D0E160C00B35AA8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1334A02D0E160C00B35AA8 /* SceneDelegate.swift */; };
 		CE1334A32D0E160C00B35AA8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1334A22D0E160C00B35AA8 /* ViewController.swift */; };
@@ -48,6 +49,7 @@
 		2D5B66012D132D950050DC99 /* TaskViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewController.swift; sourceTree = "<group>"; };
 		2D5B66032D132DAB0050DC99 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		2DDA8DC62D1345D1003036C3 /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
+		2DDA8DC82D134C86003036C3 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		CE13349B2D0E160C00B35AA8 /* GroupProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GroupProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE13349E2D0E160C00B35AA8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE1334A02D0E160C00B35AA8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				2DDA8DC62D1345D1003036C3 /* TimerViewController.swift */,
 				CE1334A02D0E160C00B35AA8 /* SceneDelegate.swift */,
 				CE1334A22D0E160C00B35AA8 /* ViewController.swift */,
+				2DDA8DC82D134C86003036C3 /* UIViewController.swift */,
 				CE1334A72D0E160E00B35AA8 /* Assets.xcassets */,
 				CE1334A92D0E160E00B35AA8 /* LaunchScreen.storyboard */,
 				CE1334AC2D0E160E00B35AA8 /* Info.plist */,
@@ -294,6 +297,7 @@
 			files = (
 				CE1334D62D12F3FF00B35AA8 /* MainDisplayViewModel.swift in Sources */,
 				CE1334A32D0E160C00B35AA8 /* ViewController.swift in Sources */,
+				2DDA8DC92D134C88003036C3 /* UIViewController.swift in Sources */,
 				2D5B66042D132DAD0050DC99 /* TaskTableViewCell.swift in Sources */,
 				CE13349F2D0E160C00B35AA8 /* AppDelegate.swift in Sources */,
 				CE1334A12D0E160C00B35AA8 /* SceneDelegate.swift in Sources */,
