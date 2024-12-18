@@ -1,29 +1,64 @@
 import XCTest
 @testable import GroupProject
 
-final class GroupProjectTests: XCTestCase {
+class MainDisplayViewModelTests: XCTestCase {
+    
+    var testView: viewModel!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    override func setUp() {
+        super.setUp()
+        
+        if let domain = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: domain)
         }
+        UserDefaults.standard.synchronize()
+
+        testView = viewModel()
     }
 
+
+    override func tearDown() {
+        testView = nil
+        super.tearDown()
+    }
+
+    func testAddTask() {
+        XCTAssertEqual(testView.tasks.count, 0, "There were not 0 tasks initially")
+        
+        testView.addTask(title: "Test", priority: .high)
+        
+        XCTAssertEqual(testView.tasks.count, 1)
+        XCTAssertEqual(testView.tasks.first?.title, "Test")
+        XCTAssertEqual(testView.tasks.first?.priority, .high)
+        XCTAssertFalse(testView.tasks.first!.isCompleted)
+    }
+    
+    func testCompleteTask() {
+        testView.addTask(title: "Test", priority: .medium)
+        
+        testView.isComplete(at: 0)
+        
+        XCTAssertTrue(testView.tasks.first!.isCompleted)
+        
+        testView.isComplete(at: 0)
+        XCTAssertFalse(testView.tasks.first!.isCompleted)
+    }
+
+    func testDeleteTask() {
+        testView.addTask(title: "Test", priority: .low)
+        XCTAssertEqual(testView.tasks.count, 1)
+        
+        testView.deleteTask(at: 0)
+        
+        XCTAssertEqual(testView.tasks.count, 0)
+    }
+
+    func testEditTask() {
+        testView.addTask(title: "Test", priority: .low)
+        
+        testView.editTask(at: 0, newTitle: "Edited test", newPriority: .high)
+        
+        XCTAssertEqual(testView.tasks.first?.title, "Edited test")
+        XCTAssertEqual(testView.tasks.first?.priority, .high)
+    }
 }
