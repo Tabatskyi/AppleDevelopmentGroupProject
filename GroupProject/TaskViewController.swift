@@ -128,6 +128,8 @@ extension TaskViewController: UITableViewDataSource, UITableViewDelegate {
             let filteredIndices = tasks.indices.filter { tasks[$0].isDone == (indexPath.section == 1) }
             tasks.remove(at: filteredIndices[indexPath.row])
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
         }
     }
+
 }
