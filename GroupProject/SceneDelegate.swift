@@ -6,19 +6,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
+                let taskViewController = TaskViewController()
+        taskViewController.tabBarItem = UITabBarItem(title: "Tasks", image: UIImage(systemName: "list.bullet"), tag: 0)
+        
+        let timerViewController = TimerViewController()
+        timerViewController.tabBarItem = UITabBarItem(title: "Timer", image: UIImage(systemName: "timer"), tag: 1)
+                let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [
+            UINavigationController(rootViewController: taskViewController),
+            UINavigationController(rootViewController: timerViewController)
+        ]
         
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = ViewController()
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
-        
-        if let windowScene = scene as? UIWindowScene {
-            let window = UIWindow(windowScene: windowScene)
-            let taskViewController = TaskViewController()
-            window.rootViewController = UINavigationController(rootViewController: taskViewController)
-            self.window = window
-            window.makeKeyAndVisible()
-        }
-
     }
 
     func sceneDidDisconnect(_ scene: UIScene) { }
