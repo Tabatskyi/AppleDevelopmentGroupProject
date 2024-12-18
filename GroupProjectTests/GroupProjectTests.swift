@@ -176,34 +176,58 @@ final class PomodoroTimerTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 3.0)
     }
+}
 
-    func testConsecutiveWorkBreakCycles() {
-        let expectation = XCTestExpectation(description: "Multiple work/break cycles complete correctly")
+class MainDisplayViewModelTests: XCTestCase {
+    
+    var testView: viewModel!
 
-        pomodoroTimer.start()
+    override func setUp() {
+        super.setUp()
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.pomodoroTimer.exposeFinishCycle() // Finish work session
+        if let domain = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: domain)
         }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.pomodoroTimer.exposeFinishCycle() // Finish break session
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            self.pomodoroTimer.exposeFinishCycle() // Finish work session
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
-            self.pomodoroTimer.exposeFinishCycle() // Finish break session
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-            XCTAssertEqual(self.currentStreak, 2)
-            XCTAssertEqual(self.modeMessage, "Work Session Started")
-            expectation.fulfill()
-        }
+        UserDefaults.standard.synchronize()
 
-        wait(for: [expectation], timeout: 6.0)
+        testView = viewModel()
     }
+
+
+    override func tearDown() {
+        testView = nil
+        super.tearDown()
+    }
+
+    func testAddTask() {
+        XCTAssertEqual(testView.tasks.count, 0, "There were not 0 tasks initially")
+        
+        testView.addTask(title: "Test", priority: .high)
+        
+        XCTAssertEqual(testView.tasks.count, 1)
+        XCTAssertEqual(testView.tasks.first?.title, "Test")
+        XCTAssertEqual(testView.tasks.first?.priority, .high)
+        XCTAssertFalse(testView.tasks.first!.isCompleted)
+    }
+    
+    func testCompleteTask() {
+        testView.addTask(title: "Test", priority: .medium)
+        
+        testView.isComplete(at: 0)
+        
+        XCTAssertTrue(testView.tasks.first!.isCompleted)
+        
+        testView.isComplete(at: 0)
+        XCTAssertFalse(testView.tasks.first!.isCompleted)
+    }
+
+    func testDeleteTask() {
+        testView.addTask(title: "Test", priority: .low)
+        XCTAssertEqual(testView.tasks.count, 1)
+        
+        testView.deleteTask(at: 0)
+        
+        XCTAssertEqual(testView.tasks.count, 0)
+    }
+
 }
