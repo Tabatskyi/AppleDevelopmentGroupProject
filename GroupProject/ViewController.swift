@@ -1,8 +1,7 @@
 import UIKit
 
-class ViewController: UIViewController {
-    
-    private let showViewModel = viewModel()
+final class ViewController: UIViewController {
+    private let showViewModel = MainDisplayViewModel()
     private let tableView = UITableView()
     private let buttons = UIButton(type: .system)
     
