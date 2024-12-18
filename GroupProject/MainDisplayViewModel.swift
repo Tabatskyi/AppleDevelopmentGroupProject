@@ -37,6 +37,13 @@ class viewModel {
         reloadTableView?()
     }
     
+    func editTask(at index: Int, newTitle: String, newPriority: TaskPriority) {
+        tasks[index].title = newTitle
+        tasks[index].priority = newPriority
+        saveTasks()
+        reloadTableView?()
+    }
+    
     private func saveTasks() {
         if let data = try? JSONEncoder().encode(tasks) {
             UserDefaults.standard.set(data, forKey: key)

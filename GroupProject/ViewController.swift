@@ -77,7 +77,24 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        showViewModel.isComplete(at: indexPath.row)
+        
+        let task = showViewModel.tasks[indexPath.row]
+        
+        let alert = UIAlertController(title: "Edit Task", message: "Edit this task:", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = task.title
+        }
+        
+        for priority in TaskPriority.allCases {
+            alert.addAction(UIAlertAction(title: priority.rawValue, style: .default) { _ in
+                if let newTitle = alert.textFields?.first?.text, !newTitle.isEmpty {
+                    self.showViewModel.editTask(at: indexPath.row, newTitle: newTitle, newPriority: priority)
+                }
+            })
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
