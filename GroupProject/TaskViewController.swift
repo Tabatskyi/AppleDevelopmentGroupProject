@@ -2,7 +2,7 @@ import UIKit
 import SnapKit
 
 class TaskViewController: UIViewController {
-    private var tasks: [(name: String, category: String, isDone: Bool)] = []
+    private let viewModel = MainDisplayViewModel()
     private let tableView = UITableView()
     private let inputField = UITextField()
     private let addButton = UIButton(type: .system)
@@ -12,6 +12,7 @@ class TaskViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         configureTableView()
+        bindViewModel()
         hideKeyboardWhenTappedAround()
     }
 
@@ -38,7 +39,7 @@ class TaskViewController: UIViewController {
         addButton.setTitleColor(.white, for: .normal)
         addButton.backgroundColor = .systemBlue
         addButton.layer.cornerRadius = 8
-        addButton.addTarget(self, action: #selector(addTask), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(showPrioritySelector), for: .touchUpInside)
         view.addSubview(addButton)
 
         addButton.snp.makeConstraints { make in
@@ -62,7 +63,7 @@ class TaskViewController: UIViewController {
         tableView.backgroundColor = .systemGray6
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: "TaskCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TaskCell")
         tableView.snp.makeConstraints { make in
             make.top.equalTo(separatorView.snp.bottom).offset(10)
             make.leading.trailing.bottom.equalToSuperview()
@@ -70,17 +71,50 @@ class TaskViewController: UIViewController {
     }
 
     private func configureTableView() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: "TaskCell")
         tableView.rowHeight = 60
     }
 
-    @objc private func addTask() {
+    private func bindViewModel() {
+        viewModel.reloadTableView = { [weak self] in
+            DispatchQueue.main.async {
+                self?.tableView.reloadData()
+            }
+        }
+    }
+
+    @objc private func showPrioritySelector() {
         guard let taskName = inputField.text, !taskName.isEmpty else { return }
-        tasks.append((name: taskName, category: "To-Do", isDone: false))
-        inputField.text = ""
-        tableView.reloadData()
+        let alert = UIAlertController(title: "Select Priority", message: "Choose task priority", preferredStyle: .actionSheet)
+        
+        for priority in TaskPriority.allCases {
+            alert.addAction(UIAlertAction(title: priority.rawValue, style: .default, handler: { _ in
+                self.viewModel.addTask(title: taskName, priority: priority)
+                self.inputField.text = ""
+            }))
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
+    }
+
+    private func showEditTaskAlert(for index: Int) {
+        let task = viewModel.tasks[index]
+        let alert = UIAlertController(title: "Edit Task", message: "Modify task and priority", preferredStyle: .alert)
+        
+        alert.addTextField { textField in
+            textField.text = task.title
+        }
+        
+        for priority in TaskPriority.allCases {
+            alert.addAction(UIAlertAction(title: priority.rawValue, style: .default) { _ in
+                if let newTitle = alert.textFields?.first?.text, !newTitle.isEmpty {
+                    self.viewModel.editTask(at: index, newTitle: newTitle, newPriority: priority)
+                }
+            })
+        }
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        present(alert, animated: true)
     }
 }
 
@@ -90,47 +124,63 @@ extension TaskViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let toDoCount = tasks.filter { !$0.isDone }.count
-        let doneCount = tasks.filter { $0.isDone }.count
-        
-        if section == 0 {
-            return "To-Do (\(toDoCount))"
-        } else {
-            return "Done (\(doneCount))"
-        }
+        let toDoCount = viewModel.tasks.filter { !$0.isCompleted }.count
+        let doneCount = viewModel.tasks.filter { $0.isCompleted }.count
+        return section == 0 ? "To-Do (\(toDoCount))" : "Done (\(doneCount))"
     }
 
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tasks.filter { $0.isDone == (section == 1) }.count
+        return viewModel.tasks.filter { $0.isCompleted == (section == 1) }.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as! TaskTableViewCell
-        
-        let filteredTasks = tasks.filter { $0.isDone == (indexPath.section == 1) }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
+        let filteredTasks = viewModel.tasks.filter { $0.isCompleted == (indexPath.section == 1) }
         let task = filteredTasks[indexPath.row]
         
-        cell.configure(with: task.name, category: task.category, isDone: task.isDone)
-        
-        cell.onToggle = { [weak self] in
-            guard let self = self else { return }
-            if let index = self.tasks.firstIndex(where: { $0.name == task.name }) {
-                self.tasks[index].isDone.toggle()
-                self.tableView.reloadData()
-            }
-        }
+        var content = cell.defaultContentConfiguration()
+        content.text = "\(task.title) | \(task.priority.rawValue)"
+        content.secondaryText = task.isCompleted ? "✅ Done" : "❌ To-Do"
+        cell.contentConfiguration = content
         
         return cell
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let filteredIndices = tasks.indices.filter { tasks[$0].isDone == (indexPath.section == 1) }
-            tasks.remove(at: filteredIndices[indexPath.row])
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let filteredTasks = viewModel.tasks.filter { $0.isCompleted == (indexPath.section == 1) }
+        let task = filteredTasks[indexPath.row]
+        
+        let toggleAction = UIContextualAction(style: .normal, title: "Toggle") { [weak self] _, _, completion in
+            if let index = self?.viewModel.tasks.firstIndex(where: { $0.title == task.title }) {
+                self?.viewModel.isComplete(at: index)
+            }
+            completion(true)
         }
+        toggleAction.backgroundColor = .systemGreen
+        
+        return UISwipeActionsConfiguration(actions: [toggleAction])
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let filteredTasks = viewModel.tasks.filter { $0.isCompleted == (indexPath.section == 1) }
+        if let index = viewModel.tasks.firstIndex(where: { $0.title == filteredTasks[indexPath.row].title }) {
+            showEditTaskAlert(for: index)
+        }
+    }
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let filteredTasks = viewModel.tasks.filter { $0.isCompleted == (indexPath.section == 1) }
+        let task = filteredTasks[indexPath.row]
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completion in
+            if let index = self?.viewModel.tasks.firstIndex(where: { $0.title == task.title }) {
+                self?.viewModel.deleteTask(at: index)
+            }
+            completion(true)
+        }
+        deleteAction.backgroundColor = .systemRed
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 
 }
