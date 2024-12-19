@@ -180,7 +180,7 @@ final class PomodoroTimerTests: XCTestCase {
 
 class MainDisplayViewModelTests: XCTestCase {
     
-    var testView: viewModel!
+    var testView: MainDisplayViewModel!
 
     override func setUp() {
         super.setUp()
@@ -190,7 +190,7 @@ class MainDisplayViewModelTests: XCTestCase {
         }
         UserDefaults.standard.synchronize()
 
-        testView = viewModel()
+        testView = MainDisplayViewModel()
     }
 
 
